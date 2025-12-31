@@ -62,7 +62,6 @@
 </head>
 <body>
 
-<!-- Main Card -->
 <div id="main" class="card active">
     <h2>Do you love me? ❤️</h2>
     <button id="yes">Yes</button>
@@ -70,7 +69,6 @@
     <p id="msg" class="message">Thank you for loving me. I will make you my queen. 😊🫶🏻❤️‍🩹</p>
 </div>
 
-<!-- Warning Page -->
 <div id="warningBox" class="warning">
     <h3>কিগো আমি কি এত ই খারাপ যে বার বার No তে ক্লিক করচ্ছো😩<br> আমাকে আপন করে নেও প্রিয় 🥺</h3>
     <button id="clauseBtn" style="background:#ff3366;color:#fff;">Closed</button>
@@ -80,7 +78,7 @@
 <script>
 
     let noClick=0;
-    let warnLimit = Math.floor(5 + Math.random()*5);  // 5–9 clicks
+    let warnLimit=Math.floor(5+Math.random()*5);
 
     const yesBtn=document.getElementById("yes");
     const noBtn=document.getElementById("no");
@@ -89,7 +87,6 @@
     const warningBox=document.getElementById("warningBox");
     const clauseBtn=document.getElementById("clauseBtn");
 
-    // No Button Random Move
     function moveNo(){
         let x=Math.random()*200-100;
         let y=Math.random()*200-100;
@@ -99,7 +96,6 @@
     noBtn.addEventListener("click",()=>{
         noClick++;
         moveNo();
-
         if(noClick>=warnLimit){
             main.classList.remove("active");
             warningBox.classList.add("active");
@@ -109,9 +105,19 @@
     yesBtn.addEventListener("click",()=>{
         msg.style.display="block";
 
-        setInterval(()=>{
-            confetti({particleCount:150,spread:100,origin:{y:0.6}});
+        // Confetti Start
+        let confettiInterval=setInterval(()=>{
+            confetti({
+                particleCount:150,
+                spread:100,
+                origin:{y:0.6}
+            });
         },200);
+
+        // Confetti Stop after 3s
+        setTimeout(()=>{
+            clearInterval(confettiInterval);
+        },3000);
 
         if(navigator.vibrate)navigator.vibrate(300);
     });
@@ -119,7 +125,7 @@
     clauseBtn.addEventListener("click",()=>{
         noClick=0;
         warnLimit=Math.floor(5 + Math.random()*5);
-        noBtn.style.transform="translate(0,0)"; // Reset Position
+        noBtn.style.transform="translate(0,0)";
         warningBox.classList.remove("active");
         main.classList.add("active");
     });
